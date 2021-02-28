@@ -32,6 +32,8 @@ void Menu::add(std::string option){
 	options.push_back(option);
 }
 int Menu::start(){
+	clear();
+
 	ITEM **items;	
 	MENU *menu;
 	// WINDOW *win;

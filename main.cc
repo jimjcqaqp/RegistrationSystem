@@ -1,5 +1,7 @@
 #include "Menu.h"
 
+void menu_admin();
+
 int main(){
 	initscr();
 
@@ -14,7 +16,24 @@ int main(){
 	m.title = "Login";
 	m.width = 25;
 	m.hide = true;
+	while(true)
+	{
+		int index = m.start();
 
+		switch(index){
+			case 0:  
+				menu_admin();
+				break;
+		}
+			
+		if(index == 3)
+			break;
+	}
+	endwin();
+	return 0;
+}
+
+void menu_admin(){
 	Menu madmin;
 	madmin.add("Agregar curso");
 	madmin.add("Agregar profesor");
@@ -25,20 +44,8 @@ int main(){
 	madmin.y = 5;
 	madmin.title = "Menu administrador";
 	madmin.width = 30;
-	madmin.hide = true;
+	madmin.hide = false;
 
-	while(true)
-	{
-		int index = m.start();
-
-		switch(index){
-			case 0: madmin.start(); break;
-		}
-			
-		if(index == 3)
-			break;
-	}
-	endwin();
-	return 0;
+	madmin.start();
+	madmin.clear();
 }
-
