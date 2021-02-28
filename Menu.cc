@@ -25,7 +25,7 @@ void Menu::center(bool ly, bool lx){
 		y = (int)((lines - height) / 2) - 3;
 	}
 	if(lx){
-		x = (int)(cols - width) / 2 + 3;
+		x = (int)((cols - width) / 2) + 3;
 	}
 }
 void Menu::add(std::string option){
