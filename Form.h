@@ -9,12 +9,13 @@ class Form{
 		Form();
 		~Form();	
 		void start();
-		void add(std::string name);
+		void add(std::string name, int w);
 
 		void center(bool vertical, bool horizontal);
 		void clear();
 
 		std::map<std::string, std::string> inputs;
+		std::map<std::string, int> winputs; 
 		
 		int x;
 		int y;

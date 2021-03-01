@@ -28,8 +28,9 @@ void Form::center(bool ly, bool lx){
 		x = (int)((cols - width) / 2) + 3;
 	}
 }
-void Form::add(std::string name){
+void Form::add(std::string name, int w){
 	inputs[name] = "";
+	winputs[name] = w;
 }
 void Form::start(){
 	clear();
@@ -85,7 +86,8 @@ void Form::start(){
 
     while(true)
     {
-      WINDOW *wini = derwin(win, 1, width-2, i, 1);
+      // WINDOW *wini = derwin(win, 1, width-2, i, 1);
+      WINDOW *wini = derwin(win, 1, winputs[it->first] + 1, i, 1);
       wattron(wini, A_REVERSE);
       mvwgetstr(wini, 0, 0, text);
       wattroff(wini, A_REVERSE);

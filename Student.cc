@@ -1,4 +1,4 @@
-#include "Course.h"
+#include "Student.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
@@ -6,22 +6,18 @@
 
 #define PATH	"data.db"
 
-Course::Course(){
-	id = 0;
-	code = "";
-	name = "";
-}
-Course::~Course(){}
+Student::Student(){}
+Student::~Student(){}
 
 static int callback_find(void *data, int argc, char **argv, char **cols);
 static int callback_all(void *data, int argc, char **argv, char **cols);
 // FIND
-Course Course::find(int id){
+Student Student::find(int id){
 	std::string ssql;
-	ssql = "SELECT * FROM courses WHERE id='?'";
+	ssql = "SELECT * FROM students WHERE id='?'";
 	boost::replace_first(ssql, "?", std::to_string(id));
 
-	Course t;
+	Student t;
 	t.id = 0;
 	sqlite3 *db;
 	if(sqlite3_open(PATH, &db))
@@ -31,29 +27,28 @@ Course Course::find(int id){
 	return t;	
 }
 // ALL
-std::vector<Course> Course::all(){
-	std::vector<Course> ts;
+std::vector<Student> Student::all(){
+	std::vector<Student> ts;
 
 	sqlite3 *db;
 	if(sqlite3_open(PATH, &db)){
 		return ts; 
 	}
-	sqlite3_exec(db, "SELECT * FROM courses", &callback_all, &ts, NULL);	
+	sqlite3_exec(db, "SELECT * FROM students", &callback_all, &ts, NULL);	
 	sqlite3_close(db);
 	return ts;
 }
 // SAVE
-bool Course::save(){
-	if(code.size() == 0 || name.size() == 0 || teacher.id == 0)
+bool Student::save(){
+	if(code.size() == 0 || name.size() == 0)
 		return false;	
 	std::string ssql;
 	if(id == 0)
-		ssql = "INSERT INTO courses (code, name, teacher_id) VALUES('?', '?', '?')";
+		ssql = "INSERT INTO students (code, name) VALUES('?', '?')";
 	else
-		ssql = "UPDATE courses SET code='?', name='?', teacher_id='?' WHERE id=" + std::to_string(id);
+		ssql = "UPDATE students SET code='?', name='?' WHERE id=" + std::to_string(id);
 	boost::replace_first(ssql, "?", code);
 	boost::replace_first(ssql, "?", name);
-	boost::replace_first(ssql, "?", std::to_string(teacher.id));
 	
 	sqlite3 *db;
 	if(sqlite3_open(PATH, &db))
@@ -69,31 +64,21 @@ bool Course::save(){
 
 int callback_all(void *data, int argc, char **argv, char **cols)
 {
-	std::vector<Course> *ts = (std::vector<Course> *) data;
-	Course t;
+	std::vector<Student> *ts = (std::vector<Student> *) data;
+	Student t;
 	t.id = atoi(argv[0]);
 	t.code = argv[1];
 	t.name = argv[2];
-	t.teacher = Teacher::find(atoi(argv[3]));
-	if(argv[4] != NULL)
-		t.course_id = atoi(argv[4]);
-	else
-		t.course_id = 0;
 	ts->push_back(t);
 	return 0;
 }
 
 int callback_find(void *data, int argc, char **argv, char **cols)
 {
-	Course *t = (Course *)data;
+	Student *t = (Student *)data;
 	t->id = atoi(argv[0]);	
 	t->code = argv[1];
 	t->name = argv[2];
-	t->teacher = Teacher::find(atoi(argv[3]));
-	if(argv[4] != NULL)
-		t->course_id = atoi(argv[4]);
-	else
-		t->course_id = 0;
 	return 0;
 }
 
@@ -102,12 +87,12 @@ int main(int argc, char **argv)
 {
 	if(argc != 3)
 		return 1;
-	Course t;
+	Student t;
 	t.code = argv[1];
 	t.name = argv[2];
 	t.save();
 
-	std::vector<Course> ts = Course::all();
+	std::vector<Student> ts = Student::all();
 	for(int i = 0; i < ts.size(); ++i)
 		std::cout << ts[i].id << "\t" << ts[i].code << "\t" << ts[i].name << std::endl;
 

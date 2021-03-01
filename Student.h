@@ -1,16 +1,15 @@
 #pragma once
 
-#include "Teacher.h"
 #include <iostream>
 #include <sqlite3.h>
 #include <vector>
 
-class Course{
+class Student{
 	public:
-		Course();
-		~Course();
-		static Course find(int id);
-		static std::vector<Course> all(); 
+		Student();
+		~Student();
+		static Student find(int id);
+		static std::vector<Student> all(); 
 		bool save();
 		// void remove();
 
@@ -18,7 +17,5 @@ class Course{
 		int id = 0;
 		std::string name;
 		std::string code;
-		Teacher teacher;
-		int course_id;
 };
 

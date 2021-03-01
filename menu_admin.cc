@@ -1,6 +1,7 @@
 #include "menu_admin.h"
 #include "Teacher.h"
 #include "Course.h"
+#include "Student.h"
 #include "Form.h"
 #include <boost/format/format_fwd.hpp>
 #include <string>
@@ -12,13 +13,14 @@ void add_student();
 void view_courses();
 void view_teachers();
 void view_students();
+void add_course_requirement();
 
 void menu_admin(){
 	Menu m;
 	m.add("Agregar curso");
 	m.add("Agregar profesor");
 	m.add("Agregar estudiante");
-	m.add("Encargar profesor a curso");
+	m.add("Agregar requisito a curso");
 	m.add("Matricular alumno en un curso");
 	m.add("Ver Cursos");
 	m.add("Ver Profesores");
@@ -38,6 +40,7 @@ void menu_admin(){
 			case 0: add_course() ;break;
 			case 1: add_teacher();break;
 			case 2: add_student();break;
+			case 3: add_course_requirement(); break;
 
 			case 5: view_courses() ;break;
 			case 6: view_teachers();break;
@@ -50,8 +53,8 @@ void menu_admin(){
 
 void add_course(){
 	Form f;
-	f.add("Codigo");
-	f.add("Nombre");
+	f.add("Codigo", 5);
+	f.add("Nombre", 25);
 	f.width = 40;
 	f.center(false, true);
 	f.y = 20;
@@ -60,6 +63,13 @@ void add_course(){
 	
 	f.footer = "(q) para cancelar";
 	f.start();
+
+	for(std::map<std::string, std::string>::iterator it = f.inputs.begin();
+			it != f.inputs.end(); it++)
+		if(it->second.size() == 0){
+			f.clear();
+			return ;
+		}
 
 	Menu m;	
 	std::vector<Teacher> ts = Teacher::all();
@@ -86,8 +96,8 @@ void add_course(){
 }
 void add_teacher(){
 	Form f;	
-	f.add("Codigo");
-	f.add("Nombre");
+	f.add("Codigo", 11);
+	f.add("Nombre", 25);
 	f.width = 40;
 	f.center(false, true);
 	f.y = 20;
@@ -102,7 +112,24 @@ void add_teacher(){
 	t.name = f.inputs["Nombre"];
 	t.save();
 }
-void add_student(){}
+void add_student(){
+	Form f;
+	f.add("Codigo", 11);
+	f.add("Nombre", 25);
+	f.width = 40;
+	f.center(false, true);
+	f.y = 20;
+	f.title = "Agregar Estudiante";
+	f.hide = true;
+	f.footer = "(q) para cancelar";
+
+	f.start();
+
+	Student s;
+	s.code = f.inputs["Codigo"];	
+	s.name = f.inputs["Nombre"];
+	s.save();
+}
 void view_courses(){
 	Menu m;
 	std::vector<Course> cs = Course::all();
@@ -140,5 +167,26 @@ void view_teachers(){
 
 	m.start();
 }
-void view_students(){}
+void view_students(){
+	Menu m;
+	std::vector<Student> ss = Student::all();
+	for(int i = 0; i < ss.size(); ++i)
+		m.add((boost::format("%15s    ") % ss[i].code).str() + "" + ss[i].name);
+
+	m.width = 50;
+	m.center(false, true);
+	m.height = 10;
+	m.y = 20;
+	m.title = "Todos los docentes";
+	m.footer = std::to_string(ss.size()) + " estudiantes";
+	m.mark = "";
+	m.hide = true;
+
+	m.start();
+}
+
+void add_course_requirement(){
+	
+}
+
 
