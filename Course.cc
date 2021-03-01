@@ -8,6 +8,7 @@
 
 Course::Course(){
 	id = 0;
+	course_id = 0;
 	code = "";
 	name = "";
 }
@@ -48,13 +49,17 @@ bool Course::save(){
 		return false;	
 	std::string ssql;
 	if(id == 0)
-		ssql = "INSERT INTO courses (code, name, teacher_id) VALUES('?', '?', '?')";
+		ssql = "INSERT INTO courses (code, name, teacher_id, course_id) VALUES('?', '?', '?', ?)";
 	else
-		ssql = "UPDATE courses SET code='?', name='?', teacher_id='?' WHERE id=" + std::to_string(id);
+		ssql = "UPDATE courses SET code='?', name='?', teacher_id='?', course_id=? WHERE id=" + std::to_string(id);
 	boost::replace_first(ssql, "?", code);
 	boost::replace_first(ssql, "?", name);
 	boost::replace_first(ssql, "?", std::to_string(teacher.id));
-	
+	if(course_id == 0) 
+		boost::replace_first(ssql, "?", "null");
+	else
+		boost::replace_first(ssql, "?", std::to_string(course_id));
+
 	sqlite3 *db;
 	if(sqlite3_open(PATH, &db))
 		return false;

@@ -186,7 +186,34 @@ void view_students(){
 }
 
 void add_course_requirement(){
+	Menu m;
+	std::vector<Course> cs = Course::all();
+	for(int i = 0; i < cs.size(); ++i)
+		m.add((boost::format("%5s") % cs[i].code).str() + "  " + 
+					(boost::format("%25s") % cs[i].name).str() + "  " + 
+					(boost::format("%10s") % cs[i].teacher.code).str()
+					);
+
+	m.width = 50;
+	m.center(false, true);
+	m.height = 10;
+	m.y = 20;
+	// m.footer = std::to_string(cs.size()) + " cursos";
+	m.mark = "";
+	m.hide = true;
+
+	m.title = "Curso";
+	m.footer = "";
+	int indice_course = m.start();
+
+	m.title = "Curso de requirimiento";
+	m.footer = cs[indice_course].name;
+	int indice_course_r = m.start();
 	
+	if(cs[indice_course].id != cs[indice_course_r].id){
+		cs[indice_course].course_id = cs[indice_course_r].id;
+		cs[indice_course].save();
+	}
 }
 
 
