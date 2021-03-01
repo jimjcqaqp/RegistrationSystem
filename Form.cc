@@ -33,6 +33,7 @@ void Form::add(std::string name){
 }
 void Form::start(){
 	clear();
+	echo();
 
 	int th = 0;
 	if(height == 0)
@@ -89,11 +90,15 @@ void Form::start(){
       mvwgetstr(wini, 0, 0, text);
       wattroff(wini, A_REVERSE);
       it->second = text;
+			delwin(wini);
+			if(std::string(text) == "q")
+			{
+				it->second = "";
+				this->clear();
+				return; 
+			}
       if(it->second.size() != 0)
-      {
-        delwin(wini);
         break;
-      }
     }
     i += 3;
   }

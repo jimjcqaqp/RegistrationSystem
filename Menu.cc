@@ -66,7 +66,7 @@ int Menu::start(){
 	keypad(win, TRUE);
 
 	set_menu_win(menu, win);
-	set_menu_sub(menu, derwin(win, th , width - 2, 3, 2));
+	set_menu_sub(menu, derwin(win, th , width - 2, 3, 1));
 	set_menu_format(menu, th, 1);
 
 	set_menu_mark(menu, mark.c_str());

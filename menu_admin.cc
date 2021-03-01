@@ -1,5 +1,8 @@
 #include "menu_admin.h"
 #include "Teacher.h"
+#include "Course.h"
+#include "Form.h"
+#include <boost/format/format_fwd.hpp>
 #include <string>
 #include <boost/format.hpp>
 
@@ -45,12 +48,81 @@ void menu_admin(){
 	}
 }
 
-void add_course(){}
-void add_teacher(){
+void add_course(){
+	Form f;
+	f.add("Codigo");
+	f.add("Nombre");
+	f.width = 40;
+	f.center(false, true);
+	f.y = 20;
+	f.title = "Agregar Curso";
+	f.hide = false;
 	
+	f.footer = "(q) para cancelar";
+	f.start();
+
+	Menu m;	
+	std::vector<Teacher> ts = Teacher::all();
+	for(int i = 0; i < ts.size(); ++i)
+		m.add(ts[i].name);
+	m.width = 40;
+	m.center(false, true);
+	m.height = 5;
+	m.y = 33;			// Se puede modificar para la ubicación
+	m.title = "Profesor encargado";
+	m.mark = "";
+	m.hide = false;
+	int indice = m.start();
+	
+	Course course;
+	course.code = f.inputs["Codigo"];
+	course.name = f.inputs["Nombre"];
+	course.teacher = ts[indice];
+
+	course.save();
+
+	m.clear();
+	f.clear();
+}
+void add_teacher(){
+	Form f;	
+	f.add("Codigo");
+	f.add("Nombre");
+	f.width = 40;
+	f.center(false, true);
+	f.y = 20;
+	f.title = "Agregar Profesor";
+	f.hide = true;
+	f.footer = "(q) para cancelar";
+
+	f.start();
+
+	Teacher t;
+	t.code = f.inputs["Codigo"];	
+	t.name = f.inputs["Nombre"];
+	t.save();
 }
 void add_student(){}
-void view_courses(){}
+void view_courses(){
+	Menu m;
+	std::vector<Course> cs = Course::all();
+	for(int i = 0; i < cs.size(); ++i)
+		m.add((boost::format("%5s") % cs[i].code).str() + "  " + 
+					(boost::format("%25s") % cs[i].name).str() + "  " + 
+					(boost::format("%10s") % cs[i].teacher.code).str()
+					);
+
+	m.width = 50;
+	m.center(false, true);
+	m.height = 10;
+	m.y = 20;
+	m.title = "Todos los cursos";
+	m.footer = std::to_string(cs.size()) + " cursos";
+	m.mark = "";
+	m.hide = true;
+
+	m.start();
+}
 void view_teachers(){
 	Menu m;
 	std::vector<Teacher> ts = Teacher::all();
