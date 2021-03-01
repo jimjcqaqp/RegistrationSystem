@@ -12,6 +12,7 @@ Menu::Menu(){
 	mark = "-> ";
 	title = "";
 	win = NULL;
+	footer = "";
 }
 Menu::~Menu(){
 	this->clear();
@@ -56,7 +57,12 @@ int Menu::start(){
 		th = options.size();
 	else
 		th = height;
-	win = newwin(th + 4, width, y, x);
+
+	int thf = 0;
+	if(footer.size() != 0)
+		thf = 2;
+
+	win = newwin(th + 4 + thf, width, y, x);
 	keypad(win, TRUE);
 
 	set_menu_win(menu, win);
@@ -70,8 +76,16 @@ int Menu::start(){
 	mvwaddch(win, 2, 0, ACS_LTEE);
 	mvwhline(win, 2, 1, ACS_HLINE, width - 2);
 	mvwaddch(win, 2, width - 1, ACS_RTEE);
-
 	mvwprintw(win, 1, (width - title.size()) / 2, title.c_str());
+	
+	// ******************* //
+	if(footer.size() != 0)
+	{
+		mvwaddch(win, th + 3, 0, ACS_LTEE);
+		mvwhline(win, th + 3, 1, ACS_HLINE, width - 2);
+		mvwaddch(win, th + 3, width - 1, ACS_RTEE);
+		mvwprintw(win,th + 3 + 1, (width - footer.size()) / 2, footer.c_str());	
+	}
 
 	post_menu(menu);
 	wrefresh(win);

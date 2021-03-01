@@ -24,5 +24,6 @@ class Menu{
 		std::string title;
 
 		WINDOW *win;
+		std::string footer;
 };
 

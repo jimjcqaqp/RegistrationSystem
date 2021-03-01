@@ -1,5 +1,7 @@
 #include "menu_admin.h"
 #include "Teacher.h"
+#include <string>
+#include <boost/format.hpp>
 
 void add_course();
 void add_teacher();
@@ -25,7 +27,6 @@ void menu_admin(){
 	m.y = 5;
 	m.title = "Menu administrador";
 	m.hide = false;
-
 
 	while(true){
 		int index = m.start();
@@ -54,12 +55,15 @@ void view_teachers(){
 	Menu m;
 	std::vector<Teacher> ts = Teacher::all();
 	for(int i = 0; i < ts.size(); ++i)
-		m.add(ts[i].name);
+		m.add((boost::format("%15s    ") % ts[i].code).str() + "" + ts[i].name);
 
 	m.width = 50;
 	m.center(false, true);
+	m.height = 10;
 	m.y = 20;
 	m.title = "Todos los docentes";
+	m.footer = std::to_string(ts.size()) + " profesores";
+	m.mark = "";
 	m.hide = true;
 
 	m.start();
