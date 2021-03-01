@@ -20,7 +20,7 @@ void menu_teacher()
 	while(true){
 		int indice = m.start();
 
-			
+						
 
 		if(indice == ts.size())
 			break;
