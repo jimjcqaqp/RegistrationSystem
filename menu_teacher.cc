@@ -17,12 +17,12 @@ void menu_teacher()
 	m.title = "Login";
 	m.hide = true;
 
-	while(true){
-		int indice = m.start();
-		if(indice == ts.size())
-			break;
-		menu_teacher_postlogin(ts[indice]);
-	}
+	
+	int indice = m.start();
+	if(indice == ts.size())
+		return;
+	menu_teacher_postlogin(ts[indice]);
+	
 }
 
 void menu_teacher_postlogin(Teacher t){

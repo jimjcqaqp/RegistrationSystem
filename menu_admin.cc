@@ -133,7 +133,7 @@ void add_student(){
 	f.center(false, true);
 	f.y = 20;
 	f.title = "Agregar Estudiante";
-	f.hide = true;
+	f.hide = false;
 	f.footer = "(q) para cancelar";
 
 	f.start();
@@ -146,6 +146,8 @@ void add_student(){
 		active_message("ERROR", "ERROR DB");
 	else
 		active_message("COMPLETADO", "El estudiante fue creado");
+
+	f.clear();
 }
 void view_courses(){
 	Menu m;
@@ -237,6 +239,7 @@ void add_course_requirement(){
 
 	m.title = "Curso de requirimiento";
 	m.footer = cs[indice_course].name;
+	m.hide = false;
 	int indice_course_r = m.start();
 	
 	if(cs[indice_course].id != cs[indice_course_r].id){
