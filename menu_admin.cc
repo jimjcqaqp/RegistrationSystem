@@ -61,7 +61,7 @@ void add_course(){
 	f.add("Nombre", 25);
 	f.width = 40;
 	f.center(false, true);
-	f.y = 20;
+	f.y = 19;
 	f.title = "Agregar Curso";
 	f.hide = false;
 	
@@ -82,7 +82,7 @@ void add_course(){
 	m.width = 40;
 	m.center(false, true);
 	m.height = 5;
-	m.y = 33;			// Se puede modificar para la ubicación
+	m.y = 31;			// Se puede modificar para la ubicación
 	m.title = "Profesor encargado";
 	m.mark = "";
 	m.hide = false;

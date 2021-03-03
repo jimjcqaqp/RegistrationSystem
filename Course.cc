@@ -43,6 +43,22 @@ std::vector<Course> Course::all(){
 	sqlite3_close(db);
 	return ts;
 }
+
+// ALL COURSES
+std::vector<Course> Course::allByTeacher(int id){
+	std::vector<Course> ts;
+
+	sqlite3 *db;
+	if(sqlite3_open(PATH, &db)){
+		return ts; 
+	}
+	std::string ssql = "SELECT * FROM courses WHERE teacher_id=" + std::to_string(id);
+	sqlite3_exec(db, ssql.c_str(), &callback_all, &ts, NULL);	
+	sqlite3_close(db);
+	return ts;
+}
+
+
 // SAVE
 bool Course::save(){
 	if(code.size() == 0 || name.size() == 0 || teacher.id == 0)

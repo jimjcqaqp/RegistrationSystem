@@ -11,6 +11,7 @@ class Course{
 		~Course();
 		static Course find(int id);
 		static std::vector<Course> all(); 
+		static std::vector<Course> allByTeacher(int id);
 		bool save();
 		// void remove();
 
