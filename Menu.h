@@ -3,6 +3,7 @@
 #include <menu.h>
 #include <vector>
 #include <string>
+#include <curses.h>
 
 class Menu{
 	public:

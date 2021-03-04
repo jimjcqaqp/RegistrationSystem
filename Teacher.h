@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <vector>
+#include <boost/algorithm/string.hpp>
 
 class Teacher{
 	public:

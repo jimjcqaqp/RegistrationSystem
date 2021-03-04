@@ -1,7 +1,4 @@
 #include "Menu.h"
-#include <curses.h>
-#include <iterator>
-#include <menu.h>
 
 Menu::Menu(){
 	x = 0;

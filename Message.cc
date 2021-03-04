@@ -1,7 +1,4 @@
 #include "Message.h"
-#include <curses.h>
-#include <iterator>
-#include <menu.h>
 
 Message::Message(){
 	x = 0;

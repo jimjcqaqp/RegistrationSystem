@@ -1,7 +1,4 @@
 #include "Form.h"
-#include <curses.h>
-#include <iterator>
-#include <menu.h>
 
 Form::Form(){
 	x = 0;

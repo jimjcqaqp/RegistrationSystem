@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <ncurses.h>
+#include <menu.h>
 
 class Form{
 	public:

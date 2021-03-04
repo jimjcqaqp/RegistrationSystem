@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <vector>
+#include <boost/algorithm/string.hpp>
+#include <string>
 
 class Grade{
 	public:

@@ -1,8 +1,4 @@
 #include "Grade.h"
-#include <boost/algorithm/string/replace.hpp>
-#include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <string>
 
 #define PATH	"data.db"
 

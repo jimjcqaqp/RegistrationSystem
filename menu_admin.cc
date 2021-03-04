@@ -1,12 +1,4 @@
-#include "Message.h"
 #include "menu_admin.h"
-#include "Teacher.h"
-#include "Course.h"
-#include "Student.h"
-#include "Grade.h"
-#include "Form.h"
-#include <string>
-#include <boost/format.hpp>
 
 static void active_message(std::string title, std::string msg);
 
