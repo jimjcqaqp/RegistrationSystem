@@ -13,6 +13,7 @@ Menu::Menu(){
 	title = "";
 	win = NULL;
 	footer = "";
+	keyup = 10;
 }
 Menu::~Menu(){
 	this->clear();
@@ -92,6 +93,19 @@ int Menu::start(){
 
 	int c;
 	while((c = wgetch(win)) != 10){
+		bool keypress = false;
+		for(i = 0; i < keys.size(); ++i){
+			if(keys[i] == c){
+				keyup = c;
+				keypress = true;
+				break;		
+			}
+			keyup = 10;
+		}
+
+		if(keypress == true)
+			break;
+
 		switch(c){
 			case KEY_DOWN: menu_driver(menu, REQ_DOWN_ITEM); break;
 			case KEY_UP: menu_driver(menu, REQ_UP_ITEM); break;
@@ -119,6 +133,9 @@ int Menu::start(){
 	}
 	curs_set(1);
 	return index;
+}
+void Menu::addkey(int key){
+	keys.push_back(key);
 }
 void Menu::clear(){
 	if(win != NULL)

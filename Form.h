@@ -8,7 +8,7 @@ class Form{
 	public:
 		Form();
 		~Form();	
-		void start();
+		bool start();
 		void add(std::string name, int w);
 
 		void center(bool vertical, bool horizontal);

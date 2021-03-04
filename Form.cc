@@ -32,7 +32,7 @@ void Form::add(std::string name, int w){
 	inputs[name] = "";
 	winputs[name] = w;
 }
-void Form::start(){
+bool Form::start(){
 	clear();
 	echo();
 
@@ -97,7 +97,7 @@ void Form::start(){
 			{
 				it->second = "";
 				this->clear();
-				return; 
+				return false; 
 			}
       if(it->second.size() != 0)
         break;
@@ -111,6 +111,7 @@ void Form::start(){
 		delwin(win);
 		win = NULL;
 	}
+	return true;
 }
 void Form::clear(){
 	if(win != NULL)

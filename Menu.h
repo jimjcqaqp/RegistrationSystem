@@ -12,6 +12,7 @@ class Menu{
 		void add(std::string option);
 		void center(bool vertical, bool horizontal);
 		void clear();
+		void addkey(int key);
 
 		std::vector<std::string> options;
 		int x;
@@ -25,5 +26,8 @@ class Menu{
 
 		WINDOW *win;
 		std::string footer;
+
+		std::vector<int> keys;
+		int keyup;
 };
 

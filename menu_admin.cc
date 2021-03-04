@@ -21,14 +21,14 @@ void add_course_requirement();
 
 void menu_admin(){
 	Menu m;
-	m.add("Agregar curso");
 	m.add("Agregar profesor");
+	m.add("Agregar curso");
 	m.add("Agregar estudiante");
 	m.add("Agregar requisito a curso");
 	m.add("Matricular alumno en un curso");
-	m.add("Ver Cursos");
 	m.add("Ver Profesores");
-	m.add("Ver Alumnos");
+	m.add("Ver Cursos");
+	m.add("Ver Estudiantes");
 	m.add("Regresar");
 
 	m.width = 40;
@@ -41,13 +41,13 @@ void menu_admin(){
 		int index = m.start();
 		
 		switch(index){
-			case 0: add_course() ;break;
-			case 1: add_teacher();break;
+			case 0: add_teacher();break;
+			case 1: add_course() ;break;
 			case 2: add_student();break;
 			case 3: add_course_requirement(); break;
 			case 4: register_student(); break;	
-			case 5: view_courses() ;break;
-			case 6: view_teachers();break;
+			case 5: view_teachers();break;
+			case 6: view_courses() ;break;
 			case 7: view_students();break;
 		}
 		if(index == 8)
@@ -66,7 +66,12 @@ void add_course(){
 	f.hide = false;
 	
 	f.footer = "(q) para cancelar";
-	f.start();
+	if(f.start() == false)
+	{
+		active_message("", "La operacion ha sido cancelado");
+		return;
+	}
+
 
 	for(std::map<std::string, std::string>::iterator it = f.inputs.begin();
 			it != f.inputs.end(); it++)
@@ -115,7 +120,12 @@ void add_teacher(){
 	f.hide = true;
 	f.footer = "(q) para cancelar";
 
-	f.start();
+	if(f.start() == false)
+	{
+		active_message("", "La operacion ha sido cancelada");
+		return;
+	}
+
 
 	Teacher t;
 	t.code = f.inputs["Codigo"];	
@@ -134,9 +144,13 @@ void add_student(){
 	f.y = 20;
 	f.title = "Agregar Estudiante";
 	f.hide = false;
-	f.footer = "(q) para cancelar";
+	f.footer = "(q) para cancelar";	
 
-	f.start();
+	if(f.start() == false)
+	{
+		active_message("", "La operacion ha sido cancelada");
+		return;
+	}
 
 	Student s;
 	s.code = f.inputs["Codigo"];	
@@ -155,23 +169,115 @@ void view_courses(){
 	for(int i = 0; i < cs.size(); ++i)
 	{
 		Course course_re = Course::find(cs[i].course_id);
-		m.add((boost::format("%5s") % cs[i].code).str().substr(0, 5) + "  " + 
+		m.add((boost::format("%6s") % cs[i].code).str().substr(0, 6) + "  " + 
 					(boost::format("%25s") % cs[i].name).str().substr(0, 25) + "  " + 
-					(boost::format("%10s") % cs[i].teacher.code).str().substr(0, 10) + "  " +
-					(boost::format("%22s") % course_re.name).str().substr(0, 22)
+					// (boost::format("%10s") % cs[i].teacher.code).str().substr(0, 10) + "  " +
+					(boost::format("%22s ") % course_re.name).str().substr(0, 23) 
 					);
 	}
 
-	m.width = 70;
+	// m.width = 70;
+	m.width = 60;
 	m.center(false, true);
 	m.height = 10;
 	m.y = 20;
 	m.title = "Todos los cursos";
-	m.footer = std::to_string(cs.size()) + " cursos";
+	m.footer = std::to_string(cs.size()) + " cursos - (e) editar - (v) detalles";
 	m.mark = "";
-	m.hide = true;
+	m.hide = false;
+	m.addkey('e');
+	m.addkey('v');	
 
-	m.start();
+	int indice = 0;
+
+	while(true)
+	{
+		indice = m.start();
+		if(cs.size() == 0)
+			return ;
+		if(m.keyup == 'v')
+		{
+			Course dep = Course::find(cs[indice].course_id);
+			Menu viewm;
+			viewm.width = 40;
+			viewm.center(false, true);
+			viewm.y = 38;
+			viewm.title = "Detalles";
+			viewm.mark = "";	
+			viewm.add((boost::format("%-12s: ") % "ID").str() + (boost::format("%-25s") % cs[indice].id).str());
+			viewm.add((boost::format("%-12s: ") % "Codigo").str() + (boost::format("%-25s") % cs[indice].code).str());
+			viewm.add((boost::format("%-12s: ") % "Nombre").str() + (boost::format("%-25s") % cs[indice].name).str());
+			viewm.add((boost::format("%-12s: ") % "Profesor").str() + (boost::format("%-25s") % cs[indice].teacher.name).str());
+			viewm.add((boost::format("%-12s: ") % "Dependencia").str() + (boost::format("%-25s") % dep.name).str());
+					
+			viewm.start();
+			m.keyup = 10;
+		}
+		else
+			break;
+	}	
+	if(m.keyup == 'e')	
+	{
+		m.clear();
+		Form f;	
+		f.add("Codigo", 5);
+		f.add("Nombre", 25);
+		f.width = 40;
+		f.center(false, true);
+		f.y = 20;
+		f.title = "Editar " + cs[indice].name;
+		f.hide = true;
+		f.footer = "(q) para cancelar (d) default";
+
+		if(f.start() == false)
+		{
+			active_message("", "La operacion ha sido cancelada");
+			return;
+		}
+		
+		Menu mt;	
+		std::vector<Teacher> ts = Teacher::all();
+		for(int i = 0; i < ts.size(); ++i)
+			mt.add(ts[i].name);
+		mt.width = 40;
+		mt.center(false, true);
+		mt.height = 5;
+		mt.y = 31;			// Se puede modificar para la ubicación
+		mt.title = "Profesor encargado";
+		mt.mark = "";
+		mt.hide = false;
+		mt.footer = "(d) default";
+		mt.addkey('d');
+		int indice_edit = mt.start();
+
+		if(ts.size() == 0)
+			return ;
+
+		Course c = Course::find(cs[indice].id);
+
+		for(std::map<std::string, std::string>::iterator it = f.inputs.begin(); 
+				it != f.inputs.end(); it++)
+		{
+			if(it->second != "d")
+			{
+				if(it->first == "Codigo")
+					c.code = it->second;
+				else if(it->first == "Nombre")
+					c.name = it->second;
+			}
+		}
+		if(mt.keyup != 'd')
+			c.teacher = ts[indice_edit];	
+
+		// t.code = f.inputs["Codigo"];	
+		// t.name = f.inputs["Nombre"];
+		
+		if(c.save() == false)
+			active_message("ERROR", "ERROR DB");
+		else
+			active_message("COMPLETADO", "Actualizacion completa");
+	}
+
 }
 void view_teachers(){
 	Menu m;
@@ -185,11 +291,58 @@ void view_teachers(){
 	m.height = 10;
 	m.y = 20;
 	m.title = "Todos los docentes";
-	m.footer = std::to_string(ts.size()) + " profesores";
+	m.footer = std::to_string(ts.size()) + " profesores - (e) editar";
 	m.mark = "";
 	m.hide = true;
+	m.addkey('e');
 
-	m.start();
+	int indice = m.start();
+
+	// Si es que no hay nada para seleccionar
+	if(ts.size() == 0)
+		return;
+
+	if(m.keyup == 'e')	
+	{
+		Form f;	
+		f.add("Codigo", 10);
+		f.add("Nombre", 25);
+		f.width = 40;
+		f.center(false, true);
+		f.y = 20;
+		f.title = "Editar " + ts[indice].name;
+		f.hide = true;
+		f.footer = "(q) para cancelar (d) default";
+
+		if(f.start() == false)
+		{
+			active_message("", "La operacion ha sido cancelada");
+			return;
+		}
+
+		Teacher t = Teacher::find(ts[indice].id);
+
+		for(std::map<std::string, std::string>::iterator it = f.inputs.begin(); 
+				it != f.inputs.end(); it++)
+		{
+			if(it->second != "d")
+			{
+				if(it->first == "Codigo")
+					t.code = it->second;
+				else if(it->first == "Nombre")
+					t.name = it->second;
+			}
+		}
+
+		// t.code = f.inputs["Codigo"];	
+		// t.name = f.inputs["Nombre"];
+		
+		if(t.save() == false)
+			active_message("ERROR", "ERROR DB");
+		else
+			active_message("COMPLETADO", "Actualizacion completa");
+	}	
+
 }
 void view_students(){
 	Menu m;
@@ -203,11 +356,57 @@ void view_students(){
 	m.height = 10;
 	m.y = 20;
 	m.title = "Todos los docentes";
-	m.footer = std::to_string(ss.size()) + " estudiantes";
+	m.footer = std::to_string(ss.size()) + " estudiantes - (e) editar";
 	m.mark = "";
 	m.hide = true;
+	m.addkey('e');
 
-	m.start();
+	int indice_student = m.start();
+	if(ss.size() == 0)
+		return;
+
+	if(m.keyup == 'e')	
+	{
+		Form f;	
+		f.add("Codigo", 10);
+		f.add("Nombre", 25);
+		f.width = 40;
+		f.center(false, true);
+		f.y = 20;
+		f.title = "Editar " + ss[indice_student].name;
+		f.hide = true;
+		f.footer = "(q) para cancelar (d) default";
+
+		if(f.start() == false)
+		{
+			active_message("", "La operacion ha sido cancelada");
+			return;
+		}
+
+		Student student = Student::find(ss[indice_student].id);
+
+		for(std::map<std::string, std::string>::iterator it = f.inputs.begin(); 
+				it != f.inputs.end(); it++)
+		{
+			if(it->second != "d")
+			{
+				if(it->first == "Codigo")
+					student.code = it->second;
+				else if(it->first == "Nombre")
+					student.name = it->second;
+			}
+		}
+
+		// t.code = f.inputs["Codigo"];	
+		// t.name = f.inputs["Nombre"];
+		
+		if(student.save() == false)
+			active_message("ERROR", "ERROR DB");
+		else
+			active_message("COMPLETADO", "Actualizacion completa");
+	}	
+
+
 }
 
 void add_course_requirement(){
@@ -293,6 +492,26 @@ void register_student(){
 		ms.clear();
 		mc.clear();
 		return;
+	}
+
+	if(cs[indice_course].course_id < 0){	
+		Grade grade_dep = Grade::findByStudentAndCourse(ss[indice_student].id, 
+																										cs[indice_course].course_id);
+		if(grade_dep.id == 0)
+		{
+			Course course_dep = Course::find(cs[indice_course].course_id);
+			active_message("Para continuar se debe estar", "matriculado en " + course_dep.name.substr(0, 20));
+			return ;
+		}
+	
+		if(grade_dep.average == -1){
+			// Aqui se debe de agregar la nota minima o maxima para matricularse 
+			if(grade_dep.average < 10){
+				Course course_dep = Course::find(cs[indice_course].course_id);
+				active_message("Nota insuficiente, mejorar", "notas en " + course_dep.name.substr(0, 20));
+				return ;
+			}
+		}
 	}
 	
 	Grade grade = Grade::findByStudentAndCourse(ss[indice_student].id,
