@@ -11,18 +11,10 @@ Para poder compilar este proyecto deberias tener instalado 3 dependencias que so
 
 Si se desea comprobar que todas librerias estan instaladas:
 
-#+BEGIN_SRC sh
 	ls /usr/include/ncurses.h
-#+END_SRC
-#+BEGIN_SRC sh
 	ls /usr/include/menu.h
-#+END_SRC
-#+BEGIN_SRC sh
 	ls /usr/include/sqlite3.h
-#+END_SRC
-#+BEGIN_SRC sh
 	ls /usr/include/boost/format.hpp
-#+END_SRC
 
 ## Compilación
 
