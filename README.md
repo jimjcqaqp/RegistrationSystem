@@ -41,3 +41,5 @@ El unico problema ahora para que funcione en Windows, es la libreria ncurses que
 que he investigado no tiene soporte. Bueno si, pero se deberia instalar MSYS2 para poder 
 compilarlo y ejecutarlo.
 
+Creo que si le doy tiempo puedo darle un soporte a las clases Form, Menu, Message para 
+que no usen "ncurses".
