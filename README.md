@@ -3,7 +3,7 @@
 Un sistema de matriculas en c++ usando ncurses para la consola, y sqlite para guardar la
 información.
 
-## Instalación
+## Instalación para linux
 
 Para poder compilar este proyecto deberias tener instalado 3 dependencias que son: 
 
@@ -34,3 +34,10 @@ g++ *.cc -o binary -lcurses -lmenu -lsqlite3
 
 Todo esto deberia de hacerse en la misma carpeta del proyecto, si desea mover el binario
 deberia de hacerlo junto con "data.db".
+
+## Instalación para Windows
+
+El unico problema ahora para que funcione en Windows, es la libreria ncurses que por lo
+que he investigado no tiene. Bueno si, pero se deberia instalar MSYS2 para poder 
+compilarlo y ejecutarlo.
+
