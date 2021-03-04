@@ -1,5 +1,7 @@
 # Sistema de matriculas
-Un sistema de matriculas en c++.
+
+Un sistema de matriculas en c++ usando ncurses para la consola, y sqlite para guardar la
+información.
 
 ## Instalación
 
@@ -31,5 +33,4 @@ g++ *.cc -o binary -lcurses -lmenu -lsqlite3
 	./binary
 
 Todo esto deberia de hacerse en la misma carpeta del proyecto, si desea mover el binario
-deberia de hacerlo junto con "data.db"
-
+deberia de hacerlo junto con "data.db".
