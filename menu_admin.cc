@@ -355,7 +355,7 @@ void view_students(){
 	m.center(false, true);
 	m.height = 10;
 	m.y = 20;
-	m.title = "Todos los docentes";
+	m.title = "Todos los estudiantes";
 	m.footer = std::to_string(ss.size()) + " estudiantes - (e) editar";
 	m.mark = "";
 	m.hide = true;
