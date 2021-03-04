@@ -13,6 +13,7 @@ class Grade{
 		// static Grade findByCourseId(int id);
 
 		static std::vector<Grade> all(); 
+		// static std::vector<Grade> allByTeacherId(int id);
 		static std::vector<Grade> allByStudentId(int id);
 		static std::vector<Grade> allByCourseId(int id);
 		static Grade findByStudentAndCourse(int student_id, int course_id);
