@@ -124,10 +124,10 @@ int callback_all(void *data, int argc, char **argv, char **cols)
 	std::vector<Grade> *ts = (std::vector<Grade> *) data;
 	Grade t;
 	t.id = atoi(argv[0]);
-	t.grade1 = argv[1] != NULL? atoi(argv[1]): 0;
-	t.grade2 = argv[2] != NULL? atoi(argv[2]): 0;
-	t.grade3 = argv[3] != NULL? atoi(argv[3]): 0;
-	t.average = argv[4] != NULL? atoi(argv[4]): 0;
+	t.grade1 = argv[1] != NULL? atoi(argv[1]): -1;
+	t.grade2 = argv[2] != NULL? atoi(argv[2]): -1;
+	t.grade3 = argv[3] != NULL? atoi(argv[3]): -1;
+	t.average = argv[4] != NULL? atoi(argv[4]): -1;
 	t.student_id = argv[5] != NULL? atoi(argv[5]): 0;
 	t.course_id = argv[6] != NULL? atoi(argv[6]): 0;
 	ts->push_back(t);

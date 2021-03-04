@@ -45,7 +45,7 @@ void menu_student_postlogin(Student &s){
 				report_grade(s);
 				break;*/
 		}
-		if(indice == 2)
+		if(indice == 1)
 			break;
 	}
 }
@@ -56,7 +56,7 @@ void report(Student &s){
 	std::vector<Grade> gs = Grade::allByStudentId(s.id);
 	for(int i = 0; i < gs.size(); ++i)
 	{
-		Course course = Course::find(gs[i].id);
+		Course course = Course::find(gs[i].course_id);
 		m.add((boost::format("  %-36s  ") % course.name).str());
 	}
 	m.width = 40;
@@ -66,6 +66,7 @@ void report(Student &s){
 	m.title = s.name;
 	m.footer = "(v) detalles";
 	m.hide = false;
+	m.mark = "";
 	m.addkey('v');
 
 	int indice_course = 0;
@@ -78,7 +79,7 @@ void report(Student &s){
 			Menu menu_grade;
 			menu_grade.width = 40;
 			menu_grade.center(false, true);
-			menu_grade.y = 20;
+			menu_grade.y = 18;
 			menu_grade.title = course.name;
 			
 			std::string grade1 = (gs[indice_course].grade1 == -1)? "" : std::to_string(gs[indice_course].grade1);
