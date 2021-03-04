@@ -26,9 +26,9 @@ g++ *.cc -o binary -lcurses -lmenu -lsqlite3
 
 ## Ejecución
 
-touch data.db
-sqlite3 data.db < sqlite3.sql
-./binary
+	touch data.db
+	sqlite3 data.db < sqlite3.sql
+	./binary
 
 Todo esto deberia de hacerse en la misma carpeta del proyecto, si desea mover el binario
 deberia de hacerlo junto con "data.db"
