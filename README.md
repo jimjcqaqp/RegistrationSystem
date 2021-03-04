@@ -38,6 +38,6 @@ deberia de hacerlo junto con "data.db".
 ## Instalación para Windows
 
 El unico problema ahora para que funcione en Windows, es la libreria ncurses que por lo
-que he investigado no tiene. Bueno si, pero se deberia instalar MSYS2 para poder 
+que he investigado no tiene soporte. Bueno si, pero se deberia instalar MSYS2 para poder 
 compilarlo y ejecutarlo.
 
