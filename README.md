@@ -24,7 +24,7 @@ instalar las 3 dependencias correctamente en su distribución.
 
 ## Compilación
 
-g++ *.cc -o binary -lcurses -lmenu -lsqlite3
+	g++ *.cc -o binary -lcurses -lmenu -lsqlite3
 
 ## Ejecución
 
