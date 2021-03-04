@@ -16,9 +16,9 @@ Si se desea comprobar que todas librerias estan instaladas, ejecute todos los co
 	ls /usr/include/sqlite3.h
 	ls /usr/include/boost/format.hpp
 
-Si todos los comandos le devolvieron datos la instalacion de las dependencias estan
-completas, si no es el caso, deberia consultar en "google" como instalar las 3 
-dependencias correctamente en su distribución.
+Si todos los comandos le devolvieron la ubicacion del archivo, la instalacion de las 
+dependencias estan completas, si no es el caso, deberia consultar en "google" como 
+instalar las 3 dependencias correctamente en su distribución.
 
 ## Compilación
 
