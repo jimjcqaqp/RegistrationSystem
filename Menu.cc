@@ -146,3 +146,6 @@ void Menu::clear(){
 		win = NULL;
 	}
 }
+void Menu::resetkey(){
+	keyup = 10;
+}

@@ -182,11 +182,12 @@ void view_courses(){
 	m.height = 10;
 	m.y = 20;
 	m.title = "Todos los cursos";
-	m.footer = std::to_string(cs.size()) + " cursos - (e) editar - (v) detalles";
+	m.footer = std::to_string(cs.size()) + " cursos - (e) editar - (v) detalles (q) quitar dep";
 	m.mark = "";
 	m.hide = false;
 	m.addkey('e');
 	m.addkey('v');	
+	m.addkey('q');	
 
 	int indice = 0;
 
@@ -277,7 +278,14 @@ void view_courses(){
 		else
 			active_message("COMPLETADO", "Actualizacion completa");
 	}
-
+	if(m.keyup == 'q'){
+		Course course = Course::find(cs[indice].id);
+		course.course_id = 0;
+		if(course.save() == false)
+			active_message("ERROR", "ERROR DB");
+		else
+			active_message("COMPLETADO", "Se quito la dependencia");
+	}
 }
 void view_teachers(){
 	Menu m;
@@ -494,7 +502,7 @@ void register_student(){
 		return;
 	}
 
-	if(cs[indice_course].course_id < 0){	
+	if(cs[indice_course].course_id > 0){	
 		Grade grade_dep = Grade::findByStudentAndCourse(ss[indice_student].id, 
 																										cs[indice_course].course_id);
 		if(grade_dep.id == 0)
@@ -504,13 +512,11 @@ void register_student(){
 			return ;
 		}
 	
-		if(grade_dep.average == -1){
+		if(grade_dep.average < 10){
 			// Aqui se debe de agregar la nota minima o maxima para matricularse 
-			if(grade_dep.average < 10){
 				Course course_dep = Course::find(cs[indice_course].course_id);
 				active_message("Nota insuficiente, mejorar", "notas en " + course_dep.name.substr(0, 20));
 				return ;
-			}
 		}
 	}
 	

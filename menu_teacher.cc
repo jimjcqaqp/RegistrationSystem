@@ -77,11 +77,41 @@ void workload(Teacher &t){
 	m.height = 10;
 	m.y = 13;
 	m.title = "Todos los cursos";
-	m.footer = std::to_string(cs.size()) + " cursos";
+	m.footer = std::to_string(cs.size()) + " cursos (v) detalles";
 	m.mark = "";
-	m.hide = true;
+	m.addkey('v');
+	// m.hide = true;
 
-	m.start();
+
+	while(true)
+	{
+		int indice_course = m.start();
+
+		if(cs.size() == 0)
+			return;
+
+		if(m.keyup == 'v'){
+			Menu ms;
+			std::vector<Grade> gs = Grade::allByCourseId(cs[indice_course].id);
+			for(int i = 0; i < gs.size(); ++i)
+			{
+				Student student = Student::find(gs[i].student_id);
+				ms.add( (boost::format(" %2i %-27s ") % (i+1) % student.name).str());
+			}
+			ms.width = 32;
+			ms.center(false, true);
+			ms.height = 10;
+			ms.y = 30;
+			ms.mark = "";
+			ms.hide = false;
+			ms.title = "Estudiante";
+			ms.footer = std::to_string(gs.size());
+			ms.start();
+			m.keyup = 10;
+		}
+		else
+			break;
+	}
 }
 void add_note(Teacher &t){
 
@@ -120,7 +150,7 @@ void add_note(Teacher &t){
 	ms.x += 15;
 	ms.mark = "";
 	ms.hide = false;
-	ms.title = "Alumno";
+	ms.title = "Estudiante";
 	ms.footer = std::to_string(gs.size());
 
 	indice_student = ms.start();
@@ -142,6 +172,7 @@ void add_note(Teacher &t){
 	fg.center(false, true);
 	fg.y = 13;
 	fg.title = student.name;
+	fg.footer = "(q) cancelar";
 
 	fg.start();
 
@@ -152,7 +183,7 @@ void add_note(Teacher &t){
 			active_message("Operacion Cancelada", "Tienes que completar todos los campos");		
 			return;
 		}
-	active_message(std::to_string(grade_s.id), " ");
+	// active_message(std::to_string(grade_s.id), " ");
 	
 	grade_s.grade1 = atoi(fg.inputs["Nota 1"].c_str());
 	grade_s.grade2 = atoi(fg.inputs["Nota 2"].c_str());

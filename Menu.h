@@ -13,6 +13,7 @@ class Menu{
 		void center(bool vertical, bool horizontal);
 		void clear();
 		void addkey(int key);
+		void resetkey();
 
 		std::vector<std::string> options;
 		int x;

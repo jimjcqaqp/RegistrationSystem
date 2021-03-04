@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "menu_teacher.h"
 #include "menu_admin.h"
+#include "menu_student.h"
 
 void menu_admin();
 void menu_teacher();
@@ -22,15 +23,17 @@ int main(){
 	while(true)
 	{
 		int index = m.start();
-
+		m.clear();
 		switch(index){
 			case 0:
-				m.clear();
 				menu_admin();
 				break;
 			case 1: 
-				m.clear();
 				menu_teacher();
+				break;
+			case 2:
+				menu_student();
+				break;
 		}
 			
 		if(index == 3)
