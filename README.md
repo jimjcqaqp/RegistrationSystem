@@ -49,3 +49,8 @@ compilarlo y ejecutarlo.
 
 Proximamente video para la instalación en Windows ... 
 
+## Agregados opcionales
+
+Si desean agregar un login al sistema, pues solo revicen el codigo es facil implementarlo
+usando la clase "Form".
+
