@@ -3,9 +3,6 @@
 #include "menu_admin.h"
 #include "menu_student.h"
 
-void menu_admin();
-void menu_teacher();
-
 int main(){
 	initscr();
 
@@ -35,7 +32,6 @@ int main(){
 				menu_student();
 				break;
 		}
-			
 		if(index == 3)
 			break;
 	}
