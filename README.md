@@ -28,6 +28,7 @@ instalar las 3 dependencias correctamente en su distribución.
 
 ## Ejecución
 
+	rm data.db
 	touch data.db
 	sqlite3 data.db < sqlite3.sql
 	./binary
