@@ -19,7 +19,7 @@ Si se desea comprobar que todas librerias estan instaladas, ejecute todos los co
 	ls /usr/include/boost/format.hpp
 
 Si todos los comandos le devolvieron la ubicacion del archivo, la instalacion de las 
-dependencias estan completas, si no es el caso, deberia consultar en "google" como 
+dependencias esta completa, si no es el caso, deberia consultar en "Google" como 
 instalar las 3 dependencias correctamente en su distribución.
 
 ## Compilación
@@ -31,6 +31,11 @@ instalar las 3 dependencias correctamente en su distribución.
 	rm data.db
 	touch data.db
 	sqlite3 data.db < sqlite3.sql
+
+Los comandos anteriores solo se deberan ejecutar una vez, ya que la información se almacena
+en "data.db". Lo menciono por que puede haber alguien que los ejecute en cada lanzamiento de
+la aplicación.
+
 	./binary
 
 Todo esto deberia de hacerse en la misma carpeta del proyecto, si desea mover el binario
@@ -41,4 +46,6 @@ deberia de hacerlo junto con "data.db".
 El unico problema ahora para que funcione en Windows, es la libreria ncurses que por lo
 que he investigado no tiene soporte. Bueno si, pero se deberia instalar MSYS2 para poder 
 compilarlo y ejecutarlo.
+
+Proximamente video para la instalación en Windows ... 
 
