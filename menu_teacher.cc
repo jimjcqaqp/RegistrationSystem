@@ -144,7 +144,7 @@ void add_note(Teacher &t){
 	ms.mark = "";
 	ms.hide = false;
 	ms.title = "Estudiante";
-	ms.footer = std::to_string(gs.size());
+	ms.footer = std::to_string(gs.size()) + " estudiantes";
 
 	indice_student = ms.start();
 	mc.clear();
