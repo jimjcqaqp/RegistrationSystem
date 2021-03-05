@@ -290,7 +290,7 @@ void view_teachers(){
 	m.center(false, true);
 	m.height = 10;
 	m.y = 20;
-	m.title = "Todos los docentes";
+	m.title = "Todos los profesores";
 	m.footer = std::to_string(ts.size()) + " profesores - (e) editar";
 	m.mark = "";
 	m.hide = true;
